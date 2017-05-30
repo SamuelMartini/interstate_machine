@@ -27,6 +27,40 @@ module Interstate
 
     def transition_table(*states)
       @machine_states = states
+      yield
+    end
+
+    def on(event:, transition_to: nil, from: nil)
+      if block_given?
+        yield(event)
+        define_method event do
+          send "#{event}_#{state}"
+          action = Object.const_get(event.to_s.split('_').collect(&:capitalize).join).call(base_object: self)
+          if action.success?
+            @state_machine.next
+          else
+            action.error
+          end
+        end
+      else
+        define_method event do
+          rule = Interactor::Context.new(event: event, transition_to: transition_to, from: from)
+          @state_machine.evaluate_transition_by!(rule)
+          action = Object.const_get(event.to_s.split('_').collect(&:capitalize).join).call(base_object: self)
+          if action.success?
+            @state_machine.next
+          else
+            action.error
+          end
+        end
+      end
+    end
+
+    def allow(event: nil, transition_to: nil, from: nil)
+      define_method "#{event}_#{from.first}" do
+        rule = Interactor::Context.new(event: event, transition_to: transition_to, from: from)
+        @state_machine.evaluate_transition_by!(rule)
+      end
     end
   end
 
