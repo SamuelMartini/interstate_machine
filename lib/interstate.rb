@@ -27,7 +27,6 @@ module Interstate
 
     def transition_table(*states)
       @machine_states = states
-      yield
     end
   end
 
@@ -39,6 +38,10 @@ module Interstate
 
     def state
       state_machine.state
+    end
+
+    def states
+      state_machine.states
     end
   end
 end

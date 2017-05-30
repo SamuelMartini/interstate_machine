@@ -1,10 +1,10 @@
 module Interstate
   class StateMachine
-    def initialize(states, initialized_state)
+    def initialize(states, state)
       @states = states
-      @current_state = initialized_state
+      @state = state
     end
 
-    attr_accessor :current_state
+    attr_accessor :current_state, :states, :state
   end
 end
