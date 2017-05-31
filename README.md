@@ -37,42 +37,33 @@ end
 
 Note: `on` can take a block which defines different transition(rules) for the same event
 
+When transition is allowed
 ```ruby
-RSpec.describe Vehicle do
-  let(:vehicle) { described_class.new }
-  before do
-    expect(vehicle.state).to eq :parked
-  end
+v.ignite
+#=> :idling
+```
+When transition can't happen because something wrong executing the event
+```ruby
+class Ignite
+  include Interactor
 
-  it "can properly run throught all the states" do
-    vehicle.ignite
-    expect(vehicle.state).to eq :idling
-
-    vehicle.shift_up
-    expect(vehicle.state).to eq :first_gear
-
-    vehicle.shift_up
-    expect(vehicle.state).to eq :second_gear
-
-    vehicle.shift_down
-    expect(vehicle.state).to eq :first_gear
-
-    vehicle.crash
-    expect(vehicle.state).to eq :stalled
-
-    vehicle.repair
-    expect(vehicle.state).to eq :parked
-
-    vehicle.ignite
-    expect(vehicle.state).to eq :idling
-
-    vehicle.shift_up
-    expect(vehicle.state).to eq :first_gear
-
-    vehicle.idle
-    expect(vehicle.state).to eq :idling
+  def call
+    context.fail!(error: 'no gas')
   end
 end
+
+v.ignite
+#=> "no gas"
+v.state
+#=> :parked
+```
+
+When transition is no allowed
+```ruby
+v.state
+#=> :parked
+v.shift_up
+#=> RuntimeError Exception:
 ```
 ## Development
 
