@@ -1,7 +1,6 @@
 require "interstate/version"
 require "interstate/state_machine"
 require 'interactor'
-
 module Interstate
   def self.included(base)
     base.class_eval do
@@ -34,7 +33,7 @@ module Interstate
       if block_given?
         yield(event)
         define_method event do
-          send "#{event}_#{state}"
+          respond_to?("#{event}_#{state}") ? send("#{event}_#{state}") : raise
           action = Object.const_get(event.to_s.split('_').collect(&:capitalize).join).call(base_object: self)
           if action.success?
             @state_machine.next
