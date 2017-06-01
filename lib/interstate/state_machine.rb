@@ -17,7 +17,8 @@ module Interstate
     end
 
     def failed_transition
-      "can not transit to #{context.transition_to} from #{state} via #{context.event}"
+      "can not transit to #{context.transition_to} from #{state} via
+        #{context.event}"
     end
   end
 end
