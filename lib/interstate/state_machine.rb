@@ -1,6 +1,7 @@
 module Interstate
   class StateMachine
-    attr_reader :state, :states, :context
+    attr_reader :states, :context
+    attr_accessor :state
 
     def initialize(states, state)
       @states = states

@@ -65,6 +65,10 @@ module Interstate
       state_machine.state
     end
 
+    def state=(sym)
+      state_machine.state = sym
+    end
+
     def states
       state_machine.states
     end

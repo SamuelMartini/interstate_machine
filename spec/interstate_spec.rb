@@ -25,6 +25,14 @@ RSpec.describe Interstate do
       instance = interstate.new
       expect(instance.state).to eq :on
     end
+
+
+    it 'can assign a state' do
+      interstate.initial_state(:on)
+      instance = interstate.new
+      instance.state = :foo
+      expect(instance.state).to eq :foo
+    end
   end
 
   describe '#states' do
@@ -156,7 +164,7 @@ RSpec.describe Interstate do
   describe '.initial_state(state)' do
     it 'sets initialized_state variable' do
       interstate.initial_state(:start)
-      expect(interstate.initialized_state).to eq (:start)
+      expect(interstate.initialized_state).to eq(:start)
     end
   end
 
