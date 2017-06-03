@@ -30,12 +30,12 @@ module Interstate
     end
 
     def on(event:, transition_to: nil, from: nil)
-      if block_given?
-        yield(event)
-        perform_transition_by(event: event, transition_to: transition_to, from: from)
-      else
-        perform_transition_by(event: event, transition_to: transition_to, from: from)
-      end
+      yield(event) if block_given?
+      perform_transition_by(
+        event: event,
+        transition_to: transition_to,
+        from: from
+      )
     end
 
     def allow(event: nil, transition_to: nil, from: nil)
@@ -48,9 +48,8 @@ module Interstate
 
     def perform_transition_by(event: nil, transition_to: nil, from: nil)
       define_method event do
-        perform_transition(event, transition_to, from)
-        action = Object.const_get(event.to_s.split('_').collect(&:capitalize)
-          .join).call(base_object: self)
+        evaluate_transition(event, transition_to, from)
+        action = constantize(event).call(base_object: self)
         action.success? ? @state_machine.next : action.error
       end
     end
@@ -72,13 +71,13 @@ module Interstate
 
     private
 
-    def perform_transition(event, transition_to, from)
+    def evaluate_transition(event, transition_to, from)
       if event_with_multiple_state_transition?(event, transition_to, from)
         send("#{event}_#{state}")
       elsif event_with_single_state_transition?(event, transition_to, from)
         ensure_can_transit(event, transition_to, from)
       else
-        raise
+        raise "cannot transition via #{event} from #{state}"
       end
     end
 
@@ -96,6 +95,10 @@ module Interstate
 
     def event_with_multiple_state_transition?(event, _transition_to, _from)
       respond_to?("#{event}_#{state}")
+    end
+
+    def constantize(event)
+      Object.const_get(event.to_s.split('_').collect(&:capitalize).join)
     end
   end
 end

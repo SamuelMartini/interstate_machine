@@ -35,7 +35,6 @@ RSpec.describe Interstate do
     end
   end
 
-
   describe '.allow' do
     before do
       allow_any_instance_of(Interstate::StateMachine).to receive(:evaluate_transition_by!)
