@@ -1,15 +1,8 @@
 require 'spec_helper'
 
 RSpec.describe Interstate do
-  class Run
-    def call; end
-  end
 
-  class Cycle
-    def call; end
-  end
-
-  let(:interstate) { Class.new.send(:include, described_class) }
+  let(:instance) { TrafficLight.new }
 
   describe '.new' do
     let(:subject) { interstate.new }
