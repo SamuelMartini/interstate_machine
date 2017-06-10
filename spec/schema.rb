@@ -7,4 +7,11 @@ ActiveRecord::Schema.define do
 
     t.timestamps
   end
+
+  create_table :vehicles, force: true do |t|
+    t.string :name
+    t.string :state
+
+    t.timestamps
+  end
 end

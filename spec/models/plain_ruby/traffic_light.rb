@@ -1,9 +1,10 @@
 require 'interstate'
 
-module ActiveRecord
-  class TrafficLight < ActiveRecord::Base
+module PlainRuby
+  class TrafficLight
     include Interstate
-
+    attr_accessor :state
+  
     initial_state :stop
 
     transition_table :stop, :proceed, :caution do
