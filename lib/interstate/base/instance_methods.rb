@@ -21,7 +21,7 @@ module Interstate
       def ensure_can_transit(event, transition_to, from)
         @state_machine.evaluate_transition_by!(
           Interactor::Context.new(
-            event: event, transition_to: transition_to, from: from
+            event: event, transition_to: transition_to, from: from, object: self
           )
         )
       end

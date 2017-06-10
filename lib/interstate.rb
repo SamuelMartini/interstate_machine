@@ -2,6 +2,8 @@ require 'interstate/version'
 require 'interstate/state_machine'
 require 'interstate/environment'
 require 'interstate/base/instance_methods'
+require 'interstate/plain_ruby/instance_methods'
+
 require 'interstate/active_record_class/instance_methods'
 require 'interactor'
 
