@@ -29,7 +29,7 @@ module Interstate
       # TODO  quite ugly, can be improved
       if object.state.nil?
         object.state = object.class.initialized_state.to_sym
-        object.save
+        object.save if object.persisted?
         object.state
       else
         object.state.to_sym
