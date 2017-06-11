@@ -56,7 +56,7 @@ module Interstate
     def perform_transition_by(event: nil, transition_to: nil, from: nil)
       define_method event do
         evaluate_transition(event, transition_to, from)
-        action = constantize(event).call(base_object: self)
+        action = constantize(event).call(object: self)
         action.success? ? @state_machine.next : action.error
       end
     end
