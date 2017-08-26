@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Vehicle do
+RSpec.describe PlainRuby::Vehicle do
   let(:vehicle) { described_class.new }
   before do
     expect(vehicle.state).to eq :parked
@@ -42,13 +42,13 @@ RSpec.describe Vehicle do
   end
 
   it 'returns error when transition rule is not respected' do
-    expect{vehicle.crash}.to raise_error RuntimeError
+    expect { vehicle.crash }.to raise_error RuntimeError
     expect(vehicle.state).to eq :parked
   end
 
   context 'when event has multiple transition and is called in wrong state' do
     it 'returns error' do
-      expect{vehicle.shift_down}.to raise_error RuntimeError
+      expect { vehicle.shift_down }.to raise_error RuntimeError
     end
   end
 end
