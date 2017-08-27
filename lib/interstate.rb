@@ -47,7 +47,7 @@ module Interstate
 
     def allow(event: nil, transition_to: nil, from: nil)
       define_method "#{event}_#{from.first}" do
-        ensure_can_transit(event, transition_to, from)
+        ensure_can_transit(event, transition_to, from, multiple: true)
       end
     end
 
@@ -56,7 +56,7 @@ module Interstate
     def perform_transition_by(event: nil, transition_to: nil, from: nil)
       define_method event do
         evaluate_transition(event, transition_to, from)
-        action = constantize(event).call(object: self)
+        action = constantize(interactor_name(event)).call(object: self)
         action.success? ? @state_machine.next : action.error
       end
     end

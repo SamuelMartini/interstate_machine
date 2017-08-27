@@ -1,8 +1,10 @@
 require 'interstate'
-require_relative 'cycle'
-
+require_relative 'cycle_proceed'
+require 'byebug'
 class TrafficLight
   include Interstate
+
+  attr_accessor :state
 
   initial_state :stop
 
