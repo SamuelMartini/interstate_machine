@@ -13,9 +13,10 @@ module Interstate
       Environment.define(base)
       include Base::InstanceMethods
       extend ClassMethods
-    end
 
-    attr_reader :state_machine
+      private
+      attr_reader :state_machine
+    end
   end
 
   module ClassMethods
