@@ -13,6 +13,10 @@ module Interstate
       raise failed_transition unless context.from.include? context.object.state.to_sym
     end
 
+    def next_state
+      context.transition_to.first
+    end
+
     def next
       context.object.state = context.transition_to.first
       context.object.save

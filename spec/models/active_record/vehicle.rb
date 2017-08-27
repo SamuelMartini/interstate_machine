@@ -42,7 +42,32 @@ class ShiftUp
 
   def call; end
 end
+class ShiftUpFirstGear
+  include Interactor
+
+  def call; end
+end
+class ShiftUpSecondGear
+  include Interactor
+
+  def call; end
+end
+class ShiftUpThirdGear
+  include Interactor
+
+  def call; end
+end
 class ShiftDown
+  include Interactor
+
+  def call; end
+end
+class ShiftDownFirstGear
+  include Interactor
+
+  def call; end
+end
+class ShiftDownSecondGear
   include Interactor
 
   def call; end

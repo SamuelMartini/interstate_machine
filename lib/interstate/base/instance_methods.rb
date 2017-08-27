@@ -18,10 +18,11 @@ module Interstate
         end
       end
 
-      def ensure_can_transit(event, transition_to, from)
+      def ensure_can_transit(event, transition_to, from, multiple: false)
         @state_machine.evaluate_transition_by!(
           Interactor::Context.new(
-            event: event, transition_to: transition_to, from: from, object: self
+            event: event, transition_to: transition_to, from: from,
+            multiple: multiple, object: self
           )
         )
       end
@@ -36,6 +37,14 @@ module Interstate
 
       def constantize(event)
         Object.const_get(event.to_s.split('_').collect(&:capitalize).join)
+      end
+
+      def interactor_name(event)
+        if state_machine.context.multiple
+          "#{event}_#{state_machine.next_state}"
+        else
+          event
+        end
       end
     end
   end

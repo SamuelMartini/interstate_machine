@@ -29,6 +29,11 @@ RSpec.describe Interstate::StateMachine do
       it 'returns nothing' do
         expect(subject.evaluate_transition_by!(context)).to be_nil
       end
+
+      it 'assigns context' do
+        subject.evaluate_transition_by!(context)
+        expect(subject.context).to eq context
+      end
     end
 
     context 'when transition is not allowed' do
