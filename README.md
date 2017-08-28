@@ -1,72 +1,86 @@
 # Interstate
+When state machine meets interactor. Interstate is a simple state machine which use interactors to trigger transitions. Long story short, an object receives an event which is a interactor and you can do fantastic thinks with interactors.
+What is an interactor?
+*"An interactor is a simple, single-purpose object."*
+[here](https://github.com/collectiveidea/interactor)
 
 ## Installation
 
 ## Usage
-You can check the following example here https://github.com/SamuelMartini/interstate/tree/spike/examples/vehicle
-
-Create a class Vehicle and include Interstate
-
-`transition_table` is where the state machine rules are defined.
-Each event represent an `Interactor` which is called to process the transition.
-
+### a simple example:
 ```ruby
-class Vehicle
+class TrafficLight < ActiveRecord::Base
   include Interstate
 
-  initial_state :parked
+  initial_state :stop
 
-  transition_table :parked, :idling, :first_gear, :second_gear, :third_gear, :stalled do
-    on event: :park, transition_to: [:parked], from: [:idling, :first_gear]
-    on event: :ignite, transition_to: [:idling], from: [:parked]
-    on event: :idle, transition_to: [:idling], from: [:first_gear]
-    on event: :shift_up do |event|
-      allow event: event, transition_to: [:first_gear], from: [:idling]
-      allow event: event, transition_to: [:second_gear], from: [:first_gear]
-      allow event: event, transition_to: [:third_gear], from: [:second_gear]
+  transition_table :stop, :proceed, :caution do
+    on event: :cycle do |event|
+      allow event: event, transition_to: [:proceed], from: [:stop]
+      allow event: event, transition_to: [:caution], from: [:proceed]
+      allow event: event, transition_to: [:stop], from: [:caution]
     end
-    on event: :shift_down do |event|
-      allow event: event, transition_to: [:second_gear], from: [:third_gear]
-      allow event: event, transition_to: [:first_gear], from: [:second_gear]
-    end
-    on event: :crash, transition_to: [:stalled], from: [:first_gear, :second_gear, :third_gear]
-    on event: :repair, transition_to: [:parked], from: [:stalled]
+    on event: :tilt, transition_to: [:broken], from: [:proceed, :caution, :stop]
+    on event: :repair, transition_to: [:stop], from: [:broken]
   end
 end
 ```
+`transition_table` is where the state machine rules are defined.
+Each event represent an `Interactor` that is called to process the transition.
 
-Note: `on` can take a block which defines different transition(rules) for the same event
+`on` can take a block which defines different transition(rules) for the same event or a single transition
 
-When transition is allowed
+In addition to the class where you define the state machine, you also need to create interactors for each event.
+
+In this case we have an event `cycle` that trigger many transitions so we define five interactors
+`CycleProceed`, `CycleCaution`, `CycleStop` and then `Tilt` and `Repair`. Yes, when an event triggers a transition to a single state you have to  name the class like the event itself.
+
 ```ruby
-v.ignite
-#=> :idling
-```
-When transition can't happen because something wrong executing the event
-```ruby
-class Ignite
+class CycleProceed
   include Interactor
 
+  before :validate_transition
+
   def call
-    context.fail!(error: 'no gas')
+    # do stuff needed when this state happen
+    'yeah'
+  end
+
+  private
+
+  def validate_transition
+    context.fail!(error: 'there is no power') if context.object.power == 0
   end
 end
+```
+Note: You can use all the [interactor](https://github.com/collectiveidea/interactor) magics. Whoop!
 
+You can access the class where you have included Interstate by `context.object`
+
+When transition is allowed:
+```ruby
+t = TrafficLight.new
+t.cycle
+#=> :proceed
+```
+
+When transition can't happen because something wrong executing the event
+
+```ruby
+t.power = 0
+t.cycle
 v.ignite
-#=> "no gas"
-v.state
-#=> :parked
+#=> 'there is no power'
+t.state
+#=> :stop
 ```
 
 When transition is no allowed
 ```ruby
-v.state
-#=> :parked
-v.shift_up
+t.state
+#=> :stop
+t.repair
 #=> RuntimeError Exception:
 ```
-## Development
-
 ## Contributing
-
-## License
+Feel free to play around, fork, add, pull request, and get a hug. If you decide to pull request please add tests
