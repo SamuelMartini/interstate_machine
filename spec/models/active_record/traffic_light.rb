@@ -1,5 +1,3 @@
-require 'interstate'
-
 module ActiveRecord
   class TrafficLight < ActiveRecord::Base
     include Interstate

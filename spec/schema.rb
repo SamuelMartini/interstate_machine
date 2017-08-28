@@ -14,4 +14,12 @@ ActiveRecord::Schema.define do
 
     t.timestamps
   end
+
+  create_table :orders, force: true do |t|
+    t.string :address
+    t.string :shipment
+    t.string :state
+    t.string :payment_state
+    t.timestamps
+  end
 end
