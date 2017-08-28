@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["SamuelMartini"]
   spec.email         = ["samueljmartini@gmail.com"]
 
-  spec.summary       = ''
-  spec.description   = ''
-  spec.homepage      = ''
+  spec.summary       = 'a state machine with interactor implementation'
+  spec.description   = 'Interstate is a simple state machine which use interactors to trigger transitions'
+  spec.homepage      = 'https://github.com/SamuelMartini/interstate'
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

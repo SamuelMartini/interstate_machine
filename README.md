@@ -24,6 +24,7 @@ class TrafficLight < ActiveRecord::Base
   end
 end
 ```
+If you want to use `Interstate` in plain ruby, add `attr_accessor :state` to store the state.
 `transition_table` is where the state machine rules and states are defined.
 Each event represent an `Interactor` that is called to process the transition.
 
@@ -32,7 +33,7 @@ Each event represent an `Interactor` that is called to process the transition.
 In addition to the class where you define the state machine, you also need to create interactors for each event.
 
 In this case we have an event `cycle` that trigger many transitions so we define three interactors for the `cycle` event and two for the remaining.
-`CycleProceed`, `CycleCaution`, `CycleStop` and then `Tilt` and `Repair`. Yes, when an event triggers a transition to a single state and it not a block, you have to name the class like the event name.
+`CycleProceed`, `CycleCaution`, `CycleStop` and then `Tilt` and `Repair`. Yes, when an event triggers a transition to a single state and it's not a block, you have to name the class like the event name.
 
 ```ruby
 class CycleProceed
