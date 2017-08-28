@@ -1,8 +1,7 @@
 # Interstate
-When state machine meets interactor. Interstate is a simple state machine which use interactors to trigger transitions. Long story short, an object receives an event which is a interactor and you can do fantastic thinks with interactors.
+When state machine meets interactor. Interstate is a simple state machine which use interactors to trigger transitions. Long story short, an object receives an event which is a interactor and you can do fantastic things with interactors.
 What is an interactor?
-*"An interactor is a simple, single-purpose object."*
-[here](https://github.com/collectiveidea/interactor)
+[*"An interactor is a simple, single-purpose object."*](https://github.com/collectiveidea/interactor)
 
 ## Installation
 
@@ -14,7 +13,7 @@ class TrafficLight < ActiveRecord::Base
 
   initial_state :stop
 
-  transition_table :stop, :proceed, :caution do
+  transition_table :stop, :proceed, :caution, :tilt, :broken do
     on event: :cycle do |event|
       allow event: event, transition_to: [:proceed], from: [:stop]
       allow event: event, transition_to: [:caution], from: [:proceed]
@@ -25,15 +24,15 @@ class TrafficLight < ActiveRecord::Base
   end
 end
 ```
-`transition_table` is where the state machine rules are defined.
+`transition_table` is where the state machine rules and states are defined.
 Each event represent an `Interactor` that is called to process the transition.
 
 `on` can take a block which defines different transition(rules) for the same event or a single transition
 
 In addition to the class where you define the state machine, you also need to create interactors for each event.
 
-In this case we have an event `cycle` that trigger many transitions so we define five interactors
-`CycleProceed`, `CycleCaution`, `CycleStop` and then `Tilt` and `Repair`. Yes, when an event triggers a transition to a single state you have to  name the class like the event itself.
+In this case we have an event `cycle` that trigger many transitions so we define three interactors for the `cycle` event and two for the remaining.
+`CycleProceed`, `CycleCaution`, `CycleStop` and then `Tilt` and `Repair`. Yes, when an event triggers a transition to a single state and it not a block, you have to name the class like the event name.
 
 ```ruby
 class CycleProceed
@@ -53,7 +52,7 @@ class CycleProceed
   end
 end
 ```
-Note: You can use all the [interactor](https://github.com/collectiveidea/interactor) magics. Whoop!
+Note: You can use all the magics like [hooks](https://github.com/collectiveidea/interactor). Whoop!
 
 You can access the class where you have included Interstate by `context.object`
 
@@ -69,7 +68,6 @@ When transition can't happen because something wrong executing the event
 ```ruby
 t.power = 0
 t.cycle
-v.ignite
 #=> 'there is no power'
 t.state
 #=> :stop
