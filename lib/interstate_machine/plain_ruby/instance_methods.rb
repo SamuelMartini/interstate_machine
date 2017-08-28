@@ -3,7 +3,7 @@ module PlainRuby
     attr_accessor :state_machine
 
     def initialize
-      @state_machine = Interstate::StateMachine.new(self)
+      @state_machine = InterstateMachine::StateMachine.new(self)
     end
 
     def save

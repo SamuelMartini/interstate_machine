@@ -1,4 +1,4 @@
-module Interstate
+module InterstateMachine
   module ActiveRecordClass
     module InstanceMethods
       def self.included(base)

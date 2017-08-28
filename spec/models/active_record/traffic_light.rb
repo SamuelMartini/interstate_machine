@@ -1,6 +1,6 @@
 module ActiveRecord
   class TrafficLight < ActiveRecord::Base
-    include Interstate
+    include InterstateMachine
 
     initial_state :stop
 

@@ -1,4 +1,4 @@
-module Interstate
+module InterstateMachine
   class Environment
 
     def self.define(base)

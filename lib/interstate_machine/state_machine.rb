@@ -1,4 +1,4 @@
-module Interstate
+module InterstateMachine
   class StateMachine
     attr_reader :states, :context
     attr_accessor :state

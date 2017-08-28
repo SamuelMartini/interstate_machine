@@ -1,17 +1,17 @@
 require 'spec_helper'
 
-RSpec.describe Interstate::Environment do
+RSpec.describe InterstateMachine::Environment do
   describe '.define' do
     context 'when active record' do
       let(:base) { ActiveRecord::TrafficLight }
       let(:subject) { described_class }
 
       before do
-        base.included_modules.exclude?(Interstate::ActiveRecordClass::InstanceMethods)
+        base.included_modules.exclude?(InterstateMachine::ActiveRecordClass::InstanceMethods)
       end
       it 'includes ActiveRecordClass::InstanceMethods in base' do
         described_class.define(base)
-        expect(base.included_modules).to include(Interstate::ActiveRecordClass::InstanceMethods)
+        expect(base.included_modules).to include(InterstateMachine::ActiveRecordClass::InstanceMethods)
       end
     end
 

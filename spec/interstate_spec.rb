@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-RSpec.describe Interstate do
+RSpec.describe InterstateMachine do
 
   describe '.allow' do
-    let(:subject) { Class.include(Interstate) }
+    let(:subject) { Class.include(InterstateMachine) }
 
     it 'define a method from merging event and from arguments' do
       subject.allow(event: :cycle, transition_to: %i(on), from: %i(off))
@@ -12,7 +12,7 @@ RSpec.describe Interstate do
   end
 
   describe '.on' do
-    let(:subject) { Class.include(Interstate) }
+    let(:subject) { Class.include(InterstateMachine) }
 
     context 'when no block is given' do
       it 'define a method from event argument' do
@@ -22,7 +22,7 @@ RSpec.describe Interstate do
     end
 
     context 'when block is given' do
-      let(:subject) { Class.include(Interstate) }
+      let(:subject) { Class.include(InterstateMachine) }
       it 'yield event' do
         subject.on(event: :cycle) do
           subject.allow(event: :cycle, transition_to: %i(on), from: %i(off))

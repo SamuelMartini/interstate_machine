@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Interstate::StateMachine do
+RSpec.describe InterstateMachine::StateMachine do
 
   describe '#new' do
     let(:subject) { described_class.new(object) }

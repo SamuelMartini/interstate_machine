@@ -1,10 +1,10 @@
-require 'interstate'
+require 'interstate_machine'
 
 module PlainRuby
   class TrafficLight
-    include Interstate
+    include InterstateMachine
     attr_accessor :state
-  
+
     initial_state :stop
 
     transition_table :stop, :proceed, :caution do

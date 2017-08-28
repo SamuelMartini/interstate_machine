@@ -1,17 +1,17 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'interstate/version'
+require 'interstate_machine/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "interstate"
-  spec.version       = Interstate::VERSION
+  spec.name          = "interstate_machine"
+  spec.version       = InterstateMachine::VERSION
   spec.authors       = ["SamuelMartini"]
   spec.email         = ["samueljmartini@gmail.com"]
 
   spec.summary       = 'a state machine with interactor implementation'
-  spec.description   = 'Interstate is a simple state machine which use interactors to trigger transitions'
-  spec.homepage      = 'https://github.com/SamuelMartini/interstate'
+  spec.description   = 'InterstateMachine is a simple state machine which use interactors to trigger transitions'
+  spec.homepage      = 'https://github.com/SamuelMartini/interstate_machine'
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|

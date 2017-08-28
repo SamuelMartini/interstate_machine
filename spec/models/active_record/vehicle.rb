@@ -1,6 +1,6 @@
 module ActiveRecord
   class Vehicle < ActiveRecord::Base
-    include Interstate
+    include InterstateMachine
 
     initial_state :parked
 

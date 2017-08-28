@@ -1,6 +1,6 @@
 module PlainRuby
   class Vehicle
-    include Interstate
+    include InterstateMachine
     attr_accessor :state
     initial_state :parked
 
