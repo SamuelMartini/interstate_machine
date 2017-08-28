@@ -4,9 +4,16 @@ What is an interactor?
 [*"An interactor is a simple, single-purpose object."*](https://github.com/collectiveidea/interactor)
 
 ## Installation
+```ruby
+gem install interstate_machine --pre
+```
+
+Gemfile
+```ruby
+gem 'interstate_machine', '~> 1.0.0.pre'
+```
 
 ## Usage
-### a simple example:
 ```ruby
 class TrafficLight < ActiveRecord::Base
   include InterstateMachine
