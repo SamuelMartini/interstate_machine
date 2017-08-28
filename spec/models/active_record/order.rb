@@ -1,9 +1,9 @@
-require 'interstate'
+require 'interstate_machine'
 
 require 'byebug'
 module ActiveRecord
   class Order < ActiveRecord::Base
-    include Interstate
+    include InterstateMachine
 
     initial_state :cart
 

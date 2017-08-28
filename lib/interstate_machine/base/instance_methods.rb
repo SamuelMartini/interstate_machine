@@ -1,4 +1,4 @@
-module Interstate
+module InterstateMachine
   module Base
     module InstanceMethods
 

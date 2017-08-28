@@ -1,8 +1,8 @@
-require 'interstate'
+require 'interstate_machine'
 
 module PlainRuby
   class Person
-    include Interstate
+    include InterstateMachine
     attr_accessor :state
 
     initial_state :standing

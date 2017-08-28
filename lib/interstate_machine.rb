@@ -1,13 +1,13 @@
-require 'interstate/version'
-require 'interstate/state_machine'
-require 'interstate/environment'
-require 'interstate/base/instance_methods'
-require 'interstate/plain_ruby/instance_methods'
+require 'interstate_machine/version'
+require 'interstate_machine/state_machine'
+require 'interstate_machine/environment'
+require 'interstate_machine/base/instance_methods'
+require 'interstate_machine/plain_ruby/instance_methods'
 
-require 'interstate/active_record_class/instance_methods'
+require 'interstate_machine/active_record_class/instance_methods'
 require 'interactor'
 
-module Interstate
+module InterstateMachine
   def self.included(base)
     base.class_eval do
       Environment.define(base)

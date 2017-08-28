@@ -3,8 +3,7 @@ SimpleCov.start
 require 'bundler/setup'
 require 'byebug'
 require 'active_record'
-require 'interstate'
-# require_relative '../examples/vehicle/vehicle.rb'
+require 'interstate_machine'
 
 Dir[File.dirname(__FILE__) + '/models/**/*.rb'].sort.each { |f| require File.expand_path(f) }
 

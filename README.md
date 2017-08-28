@@ -1,5 +1,5 @@
-# Interstate
-When state machine meets interactor. Interstate is a simple state machine which use interactors to trigger transitions. Long story short, an object receives an event which is a interactor and you can do fantastic things with interactors.
+# InterstateMachine
+When state machine meets interactor. InterstateMachine is a simple state machine which use interactors to trigger transitions. Long story short, an object receives an event which is a interactor and you can do fantastic things with interactors.
 What is an interactor?
 [*"An interactor is a simple, single-purpose object."*](https://github.com/collectiveidea/interactor)
 
@@ -9,7 +9,7 @@ What is an interactor?
 ### a simple example:
 ```ruby
 class TrafficLight < ActiveRecord::Base
-  include Interstate
+  include InterstateMachine
 
   initial_state :stop
 
@@ -24,7 +24,7 @@ class TrafficLight < ActiveRecord::Base
   end
 end
 ```
-If you want to use `Interstate` in plain ruby, add `attr_accessor :state` to store the state.
+If you want to use `InterstateMachine` in plain ruby, add `attr_accessor :state` to store the state.
 `transition_table` is where the state machine rules and states are defined.
 Each event represent an `Interactor` that is called to process the transition.
 
@@ -55,7 +55,7 @@ end
 ```
 Note: You can use all the magics like [hooks](https://github.com/collectiveidea/interactor). Whoop!
 
-You can access the class where you have included Interstate by `context.object`
+You can access the class where you have included InterstateMachine by `context.object`
 
 When transition is allowed:
 ```ruby
