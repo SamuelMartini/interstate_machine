@@ -10,7 +10,7 @@ gem install interstate_machine --pre
 
 Gemfile
 ```ruby
-gem 'interstate_machine', '~> 1.0.1.pre'
+gem 'interstate_machine', '~> 1.1.0.pre'
 ```
 
 ## Usage
