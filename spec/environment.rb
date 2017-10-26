@@ -9,6 +9,7 @@ RSpec.describe InterstateMachine::Environment do
       before do
         base.included_modules.exclude?(InterstateMachine::ActiveRecordClass::InstanceMethods)
       end
+ 
       it 'includes ActiveRecordClass::InstanceMethods in base' do
         described_class.define(base)
         expect(base.included_modules).to include(InterstateMachine::ActiveRecordClass::InstanceMethods)
@@ -22,6 +23,7 @@ RSpec.describe InterstateMachine::Environment do
       before do
         base.included_modules.exclude?(PlainRuby::InstanceMethods)
       end
+
       it 'includes PlainRuby::InstanceMethods in base' do
         described_class.define(base)
         expect(base.included_modules).to include(PlainRuby::InstanceMethods)

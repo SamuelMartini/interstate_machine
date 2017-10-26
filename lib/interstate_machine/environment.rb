@@ -5,7 +5,7 @@ module InterstateMachine
       if active_record?(base)
         base.send(:include, ActiveRecordClass::InstanceMethods)
       else
-        base.send(:include, PlainRuby::InstanceMethods)
+        base.send(:prepend, PlainRuby::InstanceMethods)
       end
     end
 

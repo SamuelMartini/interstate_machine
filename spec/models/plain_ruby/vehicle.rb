@@ -4,6 +4,10 @@ module PlainRuby
     attr_accessor :state
     initial_state :parked
 
+    def initialize
+      @initialize_some = 'intialize_some'
+    end
+
     transition_table :parked, :idling, :first_gear, :second_gear, :third_gear, :stalled do
       on event: :park, transition_to: [:parked], from: [:idling, :first_gear]
       on event: :ignite, transition_to: [:idling], from: [:parked]
