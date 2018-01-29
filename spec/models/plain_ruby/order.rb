@@ -3,6 +3,7 @@ module PlainRuby
   # Naive order checkout
   class Order
     include InterstateMachine
+
     attr_accessor :state
 
     initial_state :cart

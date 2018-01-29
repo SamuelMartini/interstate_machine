@@ -17,23 +17,22 @@ gem 'interstate_machine', '~> 1.0.0'
 
 ## Usage
 ```ruby
-class TrafficLight < ActiveRecord::Base
+class Order
   include InterstateMachine
 
-  initial_state :stop
+  attr_accessor :state
 
-  transition_table :stop, :proceed, :caution, :tilt, :broken do
-    on event: :cycle do |event|
-      allow event: event, transition_to: [:proceed], from: [:stop]
-      allow event: event, transition_to: [:caution], from: [:proceed]
-      allow event: event, transition_to: [:stop], from: [:caution]
+  initial_state :cart
+
+  transition_table :cart, :payment, :complete do
+    on event: :next do |event|
+      allow event: event, transition_to: [:payment], from: [:cart]
     end
-    on event: :tilt, transition_to: [:broken], from: [:proceed, :caution, :stop]
-    on event: :repair, transition_to: [:stop], from: [:broken]
+    on event: :complete, transition_to: [:complete], from: [:payment]
   end
 end
 ```
-If you want to use `InterstateMachine` in plain ruby, add `attr_accessor :state` to store the state.
+When including `InterstateMachine` in an ActiveRecord class, it does not need any attr_accessor to store the state.
 `transition_table` is where the state machine rules and states are defined.
 Each event represent an `Interactor` that is called to process the transition.
 
@@ -41,53 +40,55 @@ Each event represent an `Interactor` that is called to process the transition.
 
 In addition to the class where you define the state machine, you also need to create interactors for each event.
 
-In this case we have an event `cycle` that trigger many transitions so we define three interactors for the `cycle` event and two for the remaining.
-`CycleProceed`, `CycleCaution`, `CycleStop` and then `Tilt` and `Repair`. Yes, when an event triggers a transition to a single state and it's not a block, you have to name the class like the event name.
+In this case we have an event `next` that could trigger many transitions(:cart, :address, :payment and so on) so we define an interactors for each of them.
+`NextPayment`, `Complete`. Yes, when an event triggers a transition to a single state and it's not a block, you have to name the class like the event name.
+
+In a normal checkout you proably have something like `NextAddress`, `NextDelivery`, `NextPayment`, `NextConfirm`, `Complete`
+
 
 ```ruby
-class CycleProceed
+class NextPayment
   include Interactor
 
-  before :validate_transition
+  before :ensure_line_item
 
   def call
-    # do stuff needed when this state happen
-    'yeah'
+    # update order totals ..
   end
 
   private
 
-  def validate_transition
-    context.fail!(error: 'there is no power') if context.object.power == 0
+  def ensure_line_item
+    context.fail!(error: 'you need to add a product!') unless context.object.line_items.present?
   end
 end
 ```
-Note: You can use all the magics like [hooks](https://github.com/collectiveidea/interactor). Whoop!
+Note: You can use all the interactor magic (before, around, after) [hooks](https://github.com/collectiveidea/interactor). Whoop!
 
-You can access the class where you have included InterstateMachine by `context.object`
+You can access the class where you have included InterstateMachine with `context.object`
 
 When transition is allowed:
 ```ruby
-t = TrafficLight.new
-t.cycle
-#=> :proceed
+order = Order.new
+order.add(line_item)
+order.next
+#=> :payment
 ```
 
 When transition can't happen because something wrong executing the event
 
 ```ruby
-t.power = 0
-t.cycle
-#=> 'there is no power'
-t.state
-#=> :stop
+order = Order.new
+order.next
+#=> 'you need to add a product!'
 ```
 
 When transition is no allowed
 ```ruby
-t.state
-#=> :stop
-t.repair
+order = Order.new
+order.state
+#=> :cart
+order.complete
 #=> RuntimeError Exception:
 ```
 ## Contributing
