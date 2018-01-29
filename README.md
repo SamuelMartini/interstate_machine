@@ -5,12 +5,12 @@ What is an interactor?
 
 ## Installation
 ```ruby
-gem install interstate_machine --pre
+gem install interstate_machine
 ```
 
 Gemfile
 ```ruby
-gem 'interstate_machine', '~> 1.1.0.pre'
+gem 'interstate_machine', '~> 1.0.0'
 ```
 
 ## Usage
