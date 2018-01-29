@@ -1,3 +1,5 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/9ccdfa6f85632ebd9e41/maintainability)](https://codeclimate.com/github/SamuelMartini/interstate_machine/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/9ccdfa6f85632ebd9e41/test_coverage)](https://codeclimate.com/github/SamuelMartini/interstate_machine/test_coverage)
 # InterstateMachine
 When state machine meets interactor. InterstateMachine is a simple state machine which use interactors to trigger transitions. Long story short, an object receives an event which is a interactor and you can do fantastic things with interactors.
 What is an interactor?
