@@ -1,5 +1,5 @@
 require 'simplecov'
-SimpleCov.start
+require 'simplecov-console'
 require 'bundler/setup'
 require 'byebug'
 require 'active_record'
@@ -10,3 +10,6 @@ Dir[File.dirname(__FILE__) + '/models/**/*.rb'].sort.each { |f| require File.exp
 ActiveRecord::Base.establish_connection adapter: 'sqlite3', database: ':memory:'
 
 load File.dirname(__FILE__) + '/schema.rb'
+
+SimpleCov.formatter = SimpleCov.formatter = SimpleCov::Formatter::Console
+SimpleCov.start
